@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLoaderData } from "react-router-dom";
+import { useLoginContext } from "../store/LoginContext";
 
 function Home() {
   const navigate = useNavigate();
-  const data = useLoaderData();
-  console.log(data, "data");
+  //const data = useLoaderData();
+  const { loginEnable } = useLoginContext();
+  const [name, setName] = useState();
+  const { loginToken } = useLoginContext(); //"Guest" "gg"
+  //  const {loginEnable} = useContext(LoginContext)
 
   const handleClick = () => {
-    navigate("/about");
+    loginEnable(name); //gg
+    //navigate("/about");
   };
 
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={handleClick}>Go to About Page</button>
+      <h1>Name is: {loginToken}</h1>
+      <form>
+        <input type="text" onChange={(e) => setName(e.target.value)} />
+        <button>Sign up</button>
+        <button onClick={handleClick}>Log in</button>
+      </form>
     </div>
   );
 }
